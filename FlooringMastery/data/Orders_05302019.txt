@@ -1,0 +1,7 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+1,Dave,MI,5.75,Carpet,2.6,2.10,2.25,5.46,5.85,0.65,11.96
+2,Hussein,OH,6.25,Tile,3.8,3.50,4.15,13.30,15.77,1.82,30.89
+3,Zaki,IN,6.00,Laminate,100,2.10,1.75,210.00,175.00,23.10,408.10
+4,warsame,OH,6.25,Tile,200,3.50,4.15,700.00,830.00,95.63,1625.63
+5,Yacqub,MI,5.75,Wood,100,4.75,5.15,475.00,515.00,56.93,1046.93
+6,Ayman,IN,6.00,Carpet,100,2.25,2.10,225.00,210.00,26.10,461.10

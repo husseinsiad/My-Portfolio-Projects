@@ -1,0 +1,5 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+2,warsame,OH,6.25,Tile,200,4.15,3.50,830.00,700.00,95.63,1625.63
+3,Zamzam,IN,6.00,Tile,100,4.15,3.50,415.00,350.00,45.90,810.90
+1,Moha,IN,6.00,Laminate,100,1.75,2.10,175.00,210.00,23.10,408.10
+4,David,OH,6.25,Wood,100,4.75,5.15,475.00,515.00,61.88,1051.88

@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+1,bob2,OH,6.25,Wood,-1,5.15,4.75,-5.15,-4.75,-0.62,-10.52

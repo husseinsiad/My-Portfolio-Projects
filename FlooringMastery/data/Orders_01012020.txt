@@ -1,0 +1,4 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+3,bob4,IN,6.00,Laminate,1000,2.10,1.75,2100.00,1750.00,231.00,4081.00
+1,bob5,OH,6.25,Carpet,100,2.25,2.10,225.00,210.00,27.19,462.19
+4,bob6,OH,6.25,Wood,10000,5.15,4.75,51500.00,47500.00,6187.50,105187.50
