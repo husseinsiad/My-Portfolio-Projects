@@ -21,4 +21,5 @@ public interface gameService {
     void updateGame(Game game);
     void deleteGameById(int id);
     Round guessNumber(Round round);
+    public Round sortedByTime(int id);
 }

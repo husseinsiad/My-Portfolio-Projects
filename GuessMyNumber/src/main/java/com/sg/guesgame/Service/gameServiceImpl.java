@@ -86,17 +86,27 @@ public class gameServiceImpl implements gameService {
         currentRound.setGues(round.getGues());
         currentRound.setResult(results);
         currentRound.setGameInfo(round.getGameInfo());
+        Game game= new Game();
+        game.setStatus(true); // Finished
+        game.setId(answerKey.getId());
+        //Update Game Status' Finished'
+         updateGame(game);
         return gameDao.guessNumber(currentRound);
+        
  
     }
 
     @Override
     public void updateGame(Game game) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+     gameDao.updateGame(game); }
 
     @Override
     public void deleteGameById(int id) {
         gameDao.deleteGameById(id);
+    }
+
+    @Override
+    public Round sortedByTime(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

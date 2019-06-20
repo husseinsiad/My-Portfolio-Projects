@@ -78,14 +78,14 @@ public class gameDaoImpl implements gameDao {
 
     @Override
     public Game getGameById(int id) {
-        String GET_GAME_BY_ID = "SELECT * FROM Game where id= ?";
+        String GET_GAME_BY_ID = "select * from game where id= ?";
         return jdbc.queryForObject(GET_GAME_BY_ID, new gameMap(), id);
 
     }
 
     @Override
     public List<Game> getAllgames() {
-        String GET_ALL_GAME = "SELECT * FROM game";
+        String GET_ALL_GAME = "select * from game where status=0";
         return jdbc.query(GET_ALL_GAME, new gameMap());
     }
 
@@ -106,6 +106,12 @@ public class gameDaoImpl implements gameDao {
       jdbc.update(DELETE_GAME_BY_ID, id);
     }
 
+    @Override
+    public Round sortedByTime(int id) {
+     String GET_GAME_BY_ID = "select * from game where status=1 and id= ?";
+       return jdbc.queryForObject(GET_GAME_BY_ID, new roundMap(), id);
+    }
+
     private final static class gameMap implements RowMapper<Game> {
 
         @Override
@@ -115,6 +121,20 @@ public class gameDaoImpl implements gameDao {
             game.setAnswer(rs.getString("answer"));
             game.setStatus(rs.getBoolean("status"));
             return game;
+        }
+
+    }
+     private final static class roundMap implements RowMapper<Round> {
+
+        @Override
+        public Round mapRow(ResultSet rs, int i) throws SQLException {
+            Round round = new Round();
+            round.setId(rs.getInt("id"));
+            round.setTime(rs.getTimestamp("time").toLocalDateTime());
+            round.setGues(rs.getString("gues"));
+            round.setResult(rs.getString("result"));
+            round.setId(rs.getInt("gameid"));
+            return round;
         }
 
     }

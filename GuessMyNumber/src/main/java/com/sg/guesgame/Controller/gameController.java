@@ -49,11 +49,17 @@ public class gameController {
         return gameService.guessNumber(round);
     }
 
+    @GetMapping("/round/{id}")
+    public Round sortedByTime(@PathVariable int id) {
+        return gameService.sortedByTime(id);
+    }
+
     @GetMapping("/{id}")
     public Game findById(@PathVariable int id) {
         return gameService.getGameById(id);
     }
-     @DeleteMapping("/{id}")
+
+    @DeleteMapping("/{id}")
     public void deleteGameById(@PathVariable int id) {
         gameService.deleteGameById(id);
     }

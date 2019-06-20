@@ -6,6 +6,7 @@
 package com.sg.guesgame.Data;
 
 import com.sg.guesgame.Model.Game;
+import com.sg.guesgame.Model.Round;
 import com.sg.guesgame.TestApplicationConfiguration;
 import java.util.List;
 import org.junit.After;
@@ -19,7 +20,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -81,10 +81,13 @@ public class gameDaoImplTest {
         Game game1 = new Game();
         game1.setAnswer("2345");
         game1.setStatus(false);
+        //Start Game
         gameDao.startGame(game1);
+
         Game game2 = new Game();
         game2.setAnswer("9876");
         game2.setStatus(false);
+        //Start Game
         gameDao.startGame(game2);
 
         List<Game> allGames = gameDao.getAllgames();
@@ -114,18 +117,26 @@ public class gameDaoImplTest {
         assertEquals(game1, fromDao);
     }
 
-    /**
-     * Test of startGame method, of class gameDaoImpl.
-     */
-    @Test
-    public void testStartGame() {
-    }
-
-    /**
-     * Test of guessNumber method, of class gameDaoImpl.
-     */
-    @Test
-    public void testGuessNumber() {
-    }
-
+//    /**
+//     * Test of guessNumber method, of class gameDaoImpl.
+//     */
+//    @Test
+//    public void testGuessNumber() {
+//        Game game = new Game();
+//        game.setId(1);
+//        game.setAnswer("2345");
+//        game.setStatus(false);
+//        gameDao.startGame(game);
+//        
+//        Round round=new Round();
+//        round.setGameInfo(game);
+//        round.setGues(game.getAnswer());
+//        Round fromDao=gameDao.guessNumber(round);
+//        assertEquals(1,fromDao.getId());
+//        assertEquals(game.getAnswer(),fromDao.getId());
+//        assertEquals(1,fromDao.getId());
+//        
+//
+//    }
+//
 }

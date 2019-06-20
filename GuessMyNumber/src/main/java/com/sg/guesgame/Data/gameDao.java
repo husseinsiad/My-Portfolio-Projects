@@ -26,4 +26,5 @@ public interface gameDao {
     void updateGame(Game game);
 
     void deleteGameById(int id);
+    public Round sortedByTime(int id);
 }

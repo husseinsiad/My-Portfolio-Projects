@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    $('#forecast').toggle();
-    $('#current').toggle();
+    $('#forecast').hide();
+    $('#current').hide();
      $('.alert-danger').toggle();
     $('.btn-secondary').click(function(){
         var zip=$('#inputZip').val();
@@ -10,11 +10,9 @@ $(document).ready(function () {
            
                 $('.alert-danger').text('Zip code: please enter a 5-digit zip code')
                 //location.reload();
-                $('.alert-danger').toggle();
+                $('.alert-danger').show();
             }
-    
 
-     
         $.ajax({
 
             type: 'GET',
