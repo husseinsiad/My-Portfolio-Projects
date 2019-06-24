@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -20,19 +19,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author siyaa
  */
 @Repository
-//@Profile("production")
+@Profile("Production")
 public class gameDaoImpl implements gameDao {
 
     @Autowired
     JdbcTemplate jdbc;
 
     @Override
+    @Transactional
     public Game startGame(Game game) {
         final String sql = "INSERT INTO Game(answer) VALUES(?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -52,8 +53,9 @@ public class gameDaoImpl implements gameDao {
 
         return game;
     }
-    
+
     @Override
+    @Transactional
     public Round guessNumber(Round round) {
         final String sql = "INSERT INTO round(time,gues,result,gameid) VALUES(?,?,?,?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -63,14 +65,14 @@ public class gameDaoImpl implements gameDao {
             PreparedStatement statement = conn.prepareStatement(
                     sql,
                     Statement.RETURN_GENERATED_KEYS);
-           // round.setTime(Timestamp.valueOf(round.getTime()).toLocalDateTime());
+            // round.setTime(Timestamp.valueOf(round.getTime()).toLocalDateTime());
             statement.setString(1, round.getTime().toString());
-             statement.setString(2, round.getGues());
+            statement.setString(2, round.getGues());
             statement.setString(3, round.getResult());
             statement.setObject(4, round.getGameInfo().getId());
             return statement;
         }, keyHolder);
-        
+
         round.setId(keyHolder.getKey().intValue());
 
         return round;
@@ -90,26 +92,28 @@ public class gameDaoImpl implements gameDao {
     }
 
     @Override
+    @Transactional
     public void updateGame(Game game) {
-        String UPDATE_GAME_STATUS="UPDATE game SET status= ? WHERE id= ?;";
+        String UPDATE_GAME_STATUS = "UPDATE game SET status= ? WHERE id= ?;";
         jdbc.update(UPDATE_GAME_STATUS,
                 game.getStatus(),
                 game.getId());
     }
 
     @Override
+    @Transactional
     public void deleteGameById(int id) {
-        
-       String DELETE_ROUND_BY_ID = "DELETE FROM round where gameid= ?";
-      jdbc.update(DELETE_ROUND_BY_ID, id);
-      String DELETE_GAME_BY_ID = "DELETE FROM Game where id= ?";
-      jdbc.update(DELETE_GAME_BY_ID, id);
+
+        String DELETE_ROUND_BY_ID = "DELETE FROM round where gameid= ?";
+        jdbc.update(DELETE_ROUND_BY_ID, id);
+        String DELETE_GAME_BY_ID = "DELETE FROM Game where id= ?";
+        jdbc.update(DELETE_GAME_BY_ID, id);
     }
 
     @Override
     public Round sortedByTime(int id) {
-     String GET_GAME_BY_ID = "select * from game where status=1 and id= ?";
-       return jdbc.queryForObject(GET_GAME_BY_ID, new roundMap(), id);
+        String GET_GAME_BY_ID = "select * from game where status=1 and id= ?";
+        return jdbc.queryForObject(GET_GAME_BY_ID, new roundMap(), id);
     }
 
     private final static class gameMap implements RowMapper<Game> {
@@ -124,7 +128,8 @@ public class gameDaoImpl implements gameDao {
         }
 
     }
-     private final static class roundMap implements RowMapper<Round> {
+
+    private final static class roundMap implements RowMapper<Round> {
 
         @Override
         public Round mapRow(ResultSet rs, int i) throws SQLException {

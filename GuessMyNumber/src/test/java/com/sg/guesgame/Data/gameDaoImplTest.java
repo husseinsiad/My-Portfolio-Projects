@@ -6,7 +6,6 @@
 package com.sg.guesgame.Data;
 
 import com.sg.guesgame.Model.Game;
-import com.sg.guesgame.Model.Round;
 import com.sg.guesgame.TestApplicationConfiguration;
 import java.util.List;
 import org.junit.After;
@@ -20,6 +19,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestApplicationConfiguration.class)
 
-//@Profile("test")
+@Profile("Development")
 public class gameDaoImplTest {
 
     @Autowired
