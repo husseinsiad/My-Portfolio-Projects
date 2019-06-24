@@ -57,10 +57,7 @@ public class gameController {
         return ResponseEntity.ok(results);
     }
 
-    @GetMapping("/round/{id}")
-    public Round sortedByTime(@PathVariable int id) {
-        return gameService.sortedByTime(id);
-    }
+
 
     @GetMapping("/{id}")
     public Game findById(@PathVariable int id) {

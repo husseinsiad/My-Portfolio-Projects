@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestApplicationConfiguration.class)
 
-@Profile("Development")
+@Profile("test")
 public class gameDaoImplTest {
 
     @Autowired
@@ -117,26 +117,5 @@ public class gameDaoImplTest {
         assertEquals(game1, fromDao);
     }
 
-//    /**
-//     * Test of guessNumber method, of class gameDaoImpl.
-//     */
-//    @Test
-//    public void testGuessNumber() {
-//        Game game = new Game();
-//        game.setId(1);
-//        game.setAnswer("2345");
-//        game.setStatus(false);
-//        gameDao.startGame(game);
-//        
-//        Round round=new Round();
-//        round.setGameInfo(game);
-//        round.setGues(game.getAnswer());
-//        Round fromDao=gameDao.guessNumber(round);
-//        assertEquals(1,fromDao.getId());
-//        assertEquals(game.getAnswer(),fromDao.getId());
-//        assertEquals(1,fromDao.getId());
-//        
-//
-//    }
-//
+
 }

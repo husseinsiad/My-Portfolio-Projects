@@ -104,9 +104,6 @@ public class gameServiceImpl implements gameService {
     public void deleteGameById(int id) {
         gameDao.deleteGameById(id);
     }
-
-    @Override
-    public Round sortedByTime(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }
+ 
