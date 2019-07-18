@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"
+            xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Content Management System</title>
+
+  <!-- TinyMCE -->
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>
+  
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/blog-home.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index">Content Management System</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+         
+          <li class="nav-item">
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" class="nav-link" href="post">Post</a>
+          </li>
+            <li class="nav-item">
+            <a sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" class="nav-link" href="category">Category</a>
+          </li>
+             <li class="nav-item dropdown">
+        <a  sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')"class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          User Management
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" href="admin">Admin</a>
+          <a class="dropdown-item" href="login">Login</a>
+         
+        </div>
+      </li>
+           
+            
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container m-lg-5">
+      
+      <h2 class="text-center">Create Post</h2>
+      <br /> 
+      
+      <form type="form" action="post" method="POST">
+        <div>
+            <div class="form-group">
+                <input type="hidden" 
+                  th:name="${_csrf.parameterName}" 
+                  th:value="${_csrf.token}"/>
+                <label for="title" class="font-weight-bold">Title</label>
+                <input type="text" id="title" name="title" class="form-control" placeholder="Post title">
+            </div>       
+            <br />    
+            <div class="form-group">
+                <label for="content" class="font-weight-bold">Content</label>
+                <textarea id="content" name="content">Blog content goes here!</textarea>
+            </div>         
+            <br />    
+            <div class="form-check">
+                <label for="category" class="font-weight-bold">Categories</label>
+
+                      <div class="form-check" th:each="category : ${category}">
+                          <input class="form-check-input" type="checkbox" th:value="${category.categoryid}"  id="categoryid" name="categoryid">
+                        <label class="form-check-label" for="categoryid"  th:text="${category.name}">Check this custom checkbox</label>
+                      </div>
+                 
+               
+            </div>
+        </div>
+          <br />
+        <button type="submit" class="btn btn-primary">Create Post</button>
+      </form>
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
