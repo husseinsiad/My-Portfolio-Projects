@@ -26,11 +26,7 @@ public class Football extends Weather{
     private BufferedReader bReader; //reads file
     
     
-    /*
-     *  NOTE: Using HashMaps helps to store null key or values that are null, then comparing to HashTable
-     *  	HashMap is also linkedHashmap.
-     *  The following two line of codes uses to store String and Integer, maps day to temperature
-     */
+//    HashMap: to store key and values
     private Map<String, Integer> goals = new HashMap<>();
     
     public Football(File theFile) {
@@ -38,60 +34,60 @@ public class Football extends Weather{
 	footFile = theFile;
     }
     
-    public String printSmallestDiffernceIn4NA() throws IOException {
-	bReader = new BufferedReader(findDat2(footFile));
-	//temp store first 3 columns
-	String line = null;//set with null
-	String plTeam= "";
-	String score4Goals = "";
-	String scoreAgainGoals = "";
+    public String getSmallestDiff() throws IOException {
+	bReader = new BufferedReader(getData(footFile));
+	//keep track the first 3 columns on the table
+	String line = null;// default null
+	String teams= "";
+	String forGoals = "";
+	String againGoals = "";
 	System.out.printf("%s %15s %15s\n", "Team", "F", "A");
 	while ((line = bReader.readLine()) != null) {
 	    String[] enterD = gap_Line(line);
-	    plTeam = findV(enterD, 2);
-		score4Goals = findV(enterD, 7);
-		scoreAgainGoals = findV(enterD, 9);
-		storeGoalScores(plTeam, changeToInt(score4Goals), changeToInt(scoreAgainGoals));
-		System.out.println(plTeam + " \t " + score4Goals + " \t " + scoreAgainGoals);
+		teams = findV(enterD, 2);
+		forGoals = findV(enterD, 7);
+		againGoals = findV(enterD, 9);
+		keepScores(teams, convertToInt(forGoals), convertToInt(againGoals));
+		System.out.println(teams + " \t " + forGoals + " \t " + againGoals);
 	}
 	bReader.close();
-	return findSmallestGoalScored();
+	return getSmallestScored();
 	
 }
 
-    private String findSmallestGoalScored() {
-	final List<Integer> scoredVal = new ArrayList<Integer>();
-	final List<String> plTeams = new ArrayList<String>();
+    private String getSmallestScored() {
+	final List<Integer> scored = new ArrayList<Integer>();
+	final List<String> teams = new ArrayList<String>();
 
 	for (Entry<String, Integer> entryMap : this.goals.entrySet()) {
-	    	scoredVal.add(Math.abs(entryMap.getValue()));
-		plTeams.add(entryMap.getKey());
+		scored.add(Math.abs(entryMap.getValue()));
+		teams.add(entryMap.getKey());
 	}
 
 	int l = 0;
 	int c = 0;
 	int m = 0;
-	for (int i = 0; i < scoredVal.size(); i++) {
-		c = scoredVal.get(i);
+	for (int i = 0; i < scored.size(); i++) {
+		c = scored.get(i);
 		if (i != 0) {
-			l = scoredVal.get(i - 1);
+			l = scored.get(i - 1);
 		}//end if
-		if (l != 0 && c < scoredVal.get(m)) {
+		if (l != 0 && c < scored.get(m)) {
 			m = i;
 		}//end if
 	}//end for loops
-	return plTeams.get(m);
+	return teams.get(m);
 }
 
-    private void storeGoalScores(String plTeam, int score4Goals, int scoreAgainst) {
+    private void keepScores(String teams, int forGoals, int againstGoals) {
 	// TODO Auto-generated method stub
-	if(score4Goals!=-1 || scoreAgainst!=-1){
-	    this.goals.put(plTeam, (score4Goals-scoreAgainst));
+	if(forGoals!=-1 || againstGoals!=-1){
+	    this.goals.put(teams, (forGoals-againstGoals));
 	}
 	
     }
     //Find data and return with file
-    public static FileReader findDat2(File footFile) throws IOException{
+    public static FileReader getData(File footFile) throws IOException{
 	FileReader reader = new FileReader(footFile);
 	
 	return reader;

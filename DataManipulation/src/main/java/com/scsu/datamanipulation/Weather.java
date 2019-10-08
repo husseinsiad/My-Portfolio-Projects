@@ -23,14 +23,10 @@ public class Weather {
     private File file;
     private BufferedReader bReader; //reads file
     
-    /*
-     *  NOTE: Using HashMaps helps to store null key or values that are null, then comparing to HashTable
-     *  	HashMap is also linkedHashmap.
-     *  The following two line of codes uses to store String and Integer, maps day to temperature
-     */
-    private Map<String, Integer> dayMinMaxTem = new HashMap<>();
+//    HashMap: to store key and values
+    private Map<String, Integer> MinAndMaxTem = new HashMap<>();
     
-    //weather constructor to create file 
+    //constructor for weather in order to create file
     public Weather(File theFile){
 	file = theFile; // store file
     }//end Weather consther
@@ -41,43 +37,45 @@ public class Weather {
     }
     
     // Find the day number with smallest temperature spread in column two and maximum temp to third column
-    public String dayInSmallTemp() throws IOException{
+    public String dayNumSmallTemp() throws IOException{
 	
-	bReader = new BufferedReader(findDat(file));
-	//temp store first 3 columns
-	String line = null;//set with null
-	String dayNumber= "";
-	String tempMax = "";
-	String tempMin = "";
-	System.out.printf("%s %15s %15s\n", "Day", "Min Temp", "Max Temp");
-	while((line =bReader.readLine())!=null){
-	    String[] enterD = gap_Line(line); 
-	    dayNumber= findV(enterD, 1);
-	    tempMin= findV(enterD, 2);
-	    tempMax = findV(enterD, 3);
-	    storeDayTemp(dayNumber, changeToInt(tempMin), changeToInt(tempMin));// column1=dayNum, column2=temMin, column3 temMax
-	  //  System.out.println(dayNumber+" "+ changeToInt(tempMin)+" "+changeToInt(tempMin));
-	    System.out.printf("%d %15d %15d\n",changeToInt(dayNumber),changeToInt(tempMin),changeToInt(tempMin));
+	bReader = new BufferedReader(getdata(file));
+	//keep track the first 3 columns on the table
+	String firstLine = null;//set with null
+	String numberOfDays= "";
+	String maxTemp = "";
+	String minTemp = "";
+		System.out.println("---------------------------------------------");
+	System.out.printf("%s %15s %15s\n", "Day", "Min-Temp", "Max-Temp");
+		System.out.println("---------------------------------------------");
+	while((firstLine =bReader.readLine())!=null){
+	    String[] enterD = gap_Line(firstLine);
+	    numberOfDays= findV(enterD, 1);
+	    minTemp= findV(enterD, 2);
+	    maxTemp = findV(enterD, 3);
+		keepDayTemprature(numberOfDays, convertToInt(minTemp), convertToInt(minTemp));
+	   //print number of days, minTemp
+	    System.out.printf("%d %15d %15d\n",convertToInt(numberOfDays),convertToInt(minTemp),convertToInt(minTemp));
 	    
 	}//end while loop
 	
-	return findSmallestData();
+	return getSmallestinfo();
     }//end method
    
-    //reusable method findingSmmalest
-    protected String findSmallestData() {
+    //get smallest infor
+    protected String getSmallestinfo() {
 	String dAy = ""; 
-	int spData = 0; // spreed
-	for(Entry<String, Integer>map:this.dayMinMaxTem.entrySet()){
+	int spData = 0;
+	for(Entry<String, Integer>map:this.MinAndMaxTem.entrySet()){
 	    if(spData==0||map.getValue()<spData && isNum(map.getKey())&& nonNegative(map.getValue())){
 		dAy = map.getKey();
 		spData = map.getValue();
 	    }//end if
 	}//end for while
 	return dAy;
-    }//end findSmalestData
+    }//end getSmallestinfo
 	
-	///return non negative to be true
+	///it will return non negative value
 	private boolean nonNegative(Integer value) {
 	// TODO Auto-generated method stub
 	return value > 0;
@@ -87,19 +85,19 @@ public class Weather {
     private boolean isNum(String key) {
 	// TODO Auto-generated method stub
 	
-	return -1!=changeToInt(key);
+	return -1!=convertToInt(key);
     }
 
-    protected void storeDayTemp(String dayNumber, int tempMin, int tempMax) {
+    protected void keepDayTemprature(String numberOfDays, int minTemp, int maxTemp) {
 	// TODO Auto-generated method stub
-	if(tempMin!=-1||tempMax!=-1){
-	    this.dayMinMaxTem.put(dayNumber, tempMax - tempMin);
+	if(minTemp!=-1||maxTemp!=-1){
+	    this.MinAndMaxTem.put(numberOfDays, maxTemp - minTemp);
 	}//end if
 	
     }//end storedayTemp
 
-    //changing string into int
-    public int changeToInt(String temp) {
+    //convert string into int
+    public int convertToInt(String temp) {
 	try{
 	    return Integer.valueOf(temp);
 	}
@@ -140,10 +138,8 @@ public class Weather {
         this.file = file;
     }
 
-  
-
     //Find data and return with file
-    public static FileReader findDat(File file) throws IOException{
+    public static FileReader getdata(File file) throws IOException{
 	FileReader reader = new FileReader(file);
 	
 	return reader;
